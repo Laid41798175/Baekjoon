@@ -25,11 +25,6 @@ public class Main {
 	static boolean goalB;
 
 	public static void main(String[] args) throws IOException {
-		solve();
-		System.out.print(sb);
-	}
-
-	public static void solve() throws IOException {
 		str = br.readLine();
 		stk = new StringTokenizer(str);
 		n = Integer.parseInt(stk.nextToken());
@@ -54,16 +49,16 @@ public class Main {
 		
 		bfs();
 	}
-	
+
 	public static void bfs() {
 		Queue<Info> q = new LinkedList<>();
-		q.add(new Info(1, B.x, B.y, R.x, R.y, ""));
+		q.add(new Info(1, B.x, B.y, R.x, R.y));
 		
 		while (!q.isEmpty()) {
 			Info i = q.poll();
 			if (i.count > 10) {
 				System.out.println(-1);
-				System.exit(0);
+				return;
 			}
 			
 			for (int j = 0; j < 4; j++) {
@@ -73,17 +68,16 @@ public class Main {
 				R.y = i.ry;
 				goalR = false;
 				goalB = false;
-				if (move(j, i.count, i.route + " " + j)) {
-					q.add(new Info(i.count + 1, B.x, B.y, R.x, R.y, i.route + " " + j));
+				if (move(j, i.count)) {
+					q.add(new Info(i.count + 1, B.x, B.y, R.x, R.y));
 				}
 			}			
 		}
 		
 		System.out.println(-1);
-		System.exit(0);
 	}
 
-	public static boolean move(int direction, int count, String rt) {
+	public static boolean move(int direction, int count) {
 		boolean isMoveR = true;
 		boolean isMoveB = true;
 		while (isMoveR || isMoveB) {
@@ -126,52 +120,19 @@ public class Main {
 				break;
 			}
 		}
-		
-		// System.out.println(count + " " + direction);
-		// System.out.println(rt);
-		// print();
 
 		if (goalR && !goalB) {
 			System.out.println(count);
 			System.exit(0);
-		}
-
-		if (goalB) {
+			return true;
+		} else if (goalB) {
 			return false; // 진행 불가
+		} else {
+			return true;
 		}
-
-		return true;
-
-	}
-	
-	public static void print() {
-		char[][] ch = new char[n][m];
-		
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
-				if (isWall[i][j]) {
-					ch[i][j] = '#';
-				} else {
-					ch[i][j] = '.';
-				}
-			}
-		}
-		
-		ch[B.x][B.y] = 'B';		
-		ch[R.x][R.y] = 'R';
-		ch[holeX][holeY] = 'O';
-		
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
-				System.out.print(ch[i][j]);
-			}
-			System.out.println();
-		}
-		System.out.println();
 	}
 
 	static class BallR extends Ball {
-
 		BallR(int x, int y) {
 			super(x, y);
 		}
@@ -217,11 +178,9 @@ public class Main {
 			goalR = check();
 			return false;
 		}
-
 	}
 
 	static class BallB extends Ball {
-
 		BallB(int x, int y) {
 			super(x, y);
 		}
@@ -267,11 +226,9 @@ public class Main {
 			goalB = check();
 			return false;
 		}
-
 	}
 
 	static class Ball {
-
 		int x;
 		int y;
 
@@ -283,7 +240,6 @@ public class Main {
 		public boolean check() {
 			return x == holeX && y == holeY;
 		}
-
 	}
 }
 
@@ -295,15 +251,11 @@ class Info {
 	int rx;
 	int ry;
 	
-	String route;
-	
-	Info (int c, int bx, int by, int rx, int ry, String rt) {
+	Info (int c, int bx, int by, int rx, int ry) {
 		count = c;
 		this.bx = bx;
 		this.by = by;
 		this.rx = rx;
 		this.ry = ry;
-		
-		route = rt;
 	}
 }
