@@ -1,32 +1,38 @@
+//Do Not Modify From
 import java.io.*;
 import java.util.*;
 
 public class Main {
 
-	static StringBuilder sb = new StringBuilder();
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	static String str;
 	static StringTokenizer stk;
+	static StringBuilder sb = new StringBuilder();
+	static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
+	static int T;
 	static int n;
 	static int m;
-
+	// Do Nod Modify To
+	
 	static Question[] qst;
 	static int[] inDegree;
-	static boolean[] isVisited;
-
-	static String str;
 
 	public static void main(String[] args) throws IOException {
+		solve();
+		System.out.println(sb);
+	}
+	
+	public static void solve() throws IOException {
 		str = br.readLine();
 		stk = new StringTokenizer(str);
 		n = Integer.parseInt(stk.nextToken());
 		m = Integer.parseInt(stk.nextToken());
 		qst = new Question[n + 1];
 		for (int i = 1; i <= n; i++) {
-			qst[i] = new Question(i);
+			qst[i] = new Question();
 		}
 		inDegree = new int[n + 1];
-		isVisited = new boolean[n + 1];
 
 		for (int i = 0; i < m; i++) {
 			str = br.readLine();
@@ -62,24 +68,13 @@ public class Main {
 		while (!ans.isEmpty()) {
 			sb.append(ans.poll() + " ");
 		}
-		System.out.println(sb);
 	}
 }
 
-class Question implements Comparable<Question> {	
+class Question {	
 	Queue<Integer> q;
-	int n;
 	
-	Question(int i){
+	Question(){
 		q = new LinkedList<>();
-		n = i;
-	}
-
-	@Override
-	public int compareTo(Question o) {
-		if (q.size() == o.q.size()) {
-			return n - o.n;
-		}
-		return q.size() - o.q.size();
 	}
 }
