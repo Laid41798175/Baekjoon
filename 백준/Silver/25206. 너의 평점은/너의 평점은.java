@@ -1,4 +1,3 @@
-
 //Do Not Modify From
 import java.io.*;
 import java.util.*;
@@ -68,15 +67,5 @@ public class Main {
             }
             return base;
         }
-    }
-
-    static void print(int i, int n){
-        for (int j = 0; j < (n - i); j++){
-            sb.append(' ');
-        }
-        for (int j = 0; j < 2 * i - 1; j++) {
-            sb.append('*');
-        }
-        sb.append('\n');
     }
 }
